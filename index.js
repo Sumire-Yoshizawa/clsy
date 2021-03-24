@@ -7,23 +7,29 @@ const client = new discord.Client({
 });
 
 //Commands
+
 client.on("message", message => {
+  client.on("message", async message => {
+    if (message.author.bot) return;
 
-  if (message.author.bot) return false;
+    let prefix = await db.get(`prefix_${message.guild.id}`);
 
-  if (
-    message.content.includes("@here") ||
-    message.content.includes("@everyone")
-  )
-    return false;
-  if (message.mentions.has(client.user.id)) {
-    message.channel.send("Hello there, my default prefix is `!`");
-  }
+    if (prefix === null) prefix = default_prefix;
 
+    if (
+      message.content.includes("@here") ||
+      message.content.includes("@everyone")
+    )
+      return false;
+    if (message.mentions.has(client.user.id)) {
+      message.channel.send(
+        "My prefix is :  " +
+       [`**${prefix}**`]
+      );
+    }
+  });
 });
 //prefix
-
-
 client.commands = new discord.Collection();
 client.aliases = new discord.Collection();
 
