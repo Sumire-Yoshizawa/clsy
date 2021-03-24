@@ -15,7 +15,6 @@ module.exports = {
     if (message.deletetable) {
       message.delete();
     }
-
     // Member doesn't have permission
 
     if (!message.member.hasPermission("MANAGE_MESSAGES")) {
@@ -61,14 +60,10 @@ module.exports = {
     } else {
       deleteAmount = parseInt(args[0]);
     }
-    
-    message.channel
-      .bulkDelete(deleteAmount, true)()
-      .filter(message => !message.pinned).size
-      .then(message => {
-        message.delete({ timeout: 10000 });
-      })
-
-      .catch(err => message.channel.send(`Something went wrong... ${err}`));
+    await message.channel.bulkDelete(
+      (await message.channel.messages.fetch({ limit: args[1] })).filter(
+        m => !m.pinned
+      )
+    );
   }
 };
