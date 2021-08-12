@@ -24,7 +24,7 @@ client.on("message", message => {
     if (message.mentions.has(client.user.id)) {
       message.channel.send(
         "My prefix is :  " +
-       [`**${prefix}**`] + `type **${prefix}**help`
+       [````${prefix}```] + ` type **${prefix}**help`
       );
     }
      else return;
