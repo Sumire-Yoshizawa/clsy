@@ -14,7 +14,7 @@ module.exports = {
     if (!message.member.hasPermission("MANAGE_MESSAGES"))
       return message.channel
         .send("You do not have permissions to use this command")
-        .then(m => m.delete({ timeout: 3000 }));
+        .then(m => m.delete({ timeout: 5000 }));
 
     const Member =
       message.mentions.members.first() ||
@@ -25,12 +25,12 @@ module.exports = {
     if (!Member)
       return message.channel
         .send("Member is not found.")
-        .then(m => m.delete({ timeout: 3000 }));
+        .then(m => m.delete({ timeout: 5000 }));
 
     if (!time)
       return message.channel
         .send("Please specify a time.")
-        .then(m => m.delete({ timeout: 3000 }));
+        .then(m => m.delete({ timeout: 5000 }));
 
     const role = message.guild.roles.cache.find(
       role => role.name.toLowerCase() === "muted"
@@ -40,7 +40,7 @@ module.exports = {
       try {
         message.channel
           .send("Muted role is not found, attempting to create muted role.")
-          .then(m => m.delete({ timeout: 3000 }));
+          .then(m => m.delete({ timeout: 5000 }));
 
         let muterole = await message.guild.roles.create({
           data: {
@@ -62,7 +62,7 @@ module.exports = {
 
         message.channel
           .send("Muted role has sucessfully been created.")
-          .then(m => m.delete({ timeout: 3000 }));
+          .then(m => m.delete({ timeout: 5000 }));
       } catch (error) {
         console.log(error);
       }
@@ -75,13 +75,13 @@ module.exports = {
     if (Member.roles.cache.has(role2.id))
       return message.channel
         .send(`${Member.displayName} has already been muted.`)
-        .then(m => m.delete({ timeout: 3000 }));
+        .then(m => m.delete({ timeout: 5000 }));
 
     await Member.roles.add(role2);
 
     message.channel
       .send(`${Member.displayName} is now muted for ${time}`)
-      .then(m => m.delete({ timeout: 5000 }));
+      .then(m => m.delete({ timeout: 10000 }));
 
     setTimeout(async () => {
       await Member.roles.remove(role2);
@@ -89,7 +89,7 @@ module.exports = {
       message.channel
         .send(`${Member.displayName} is now unmuted`)
         .then(message => {
-          message.delete({ timeout: 500 });
+          message.delete({ timeout: 10000 });
         })
         .catch(O_o => {});
     }, ms(time));

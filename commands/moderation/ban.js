@@ -9,6 +9,7 @@ module.exports = {
   botPermission: ["BAN_MEMBERS"],
   async run(client, message, args) {
     message.delete();
+    const user = message.mentions.members.first();
     if (!message.guild.me.hasPermission("BAN_MEMBERS"))
       return message.channel
         .send("I don't have the right permissions.")
@@ -63,7 +64,7 @@ module.exports = {
       .ban({ reason: banReason })
 
       .catch(err => {
-        if (err) return message.channel.send("Something went wrong +" err).then(m => m.delete({ timeout: 5000 }));
+        if (err) return message.channel.send("Something went wrong +" (err)).then(m => m.delete({ timeout: 5000 }));
       });
 
     const banembed = new Discord.MessageEmbed()
@@ -81,10 +82,11 @@ module.exports = {
 
       .addField("Reason", banReason)
 
-      .setFooter("Time Banned", client.user.displayAvatarURL())
+      .setFooter("Time Banned", member.user.displayAvatarURL())
 
       .setTimestamp();
 
     message.channel.send(banembed).then(m => m.delete({ timeout: 10000 }));
+    
   }
 };

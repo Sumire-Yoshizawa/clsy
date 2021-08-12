@@ -1,5 +1,5 @@
 const Discord = require("discord.js");
-
+const { messages } = require("discord.js");
 const client = new Discord.Client();
 
 module.exports = {
@@ -64,6 +64,10 @@ module.exports = {
       (await message.channel.messages.fetch({ limit: args[1] })).filter(
         m => !m.pinned
       )
-    );
-  }
+      )
+      
+     
+      
+      
+    }
 };

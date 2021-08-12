@@ -9,25 +9,25 @@ module.exports = {
   run: async (client, message, args) => {
     
     if(!message.member.hasPermission("ADMINISTRATOR")) {
-      return message.channel.send("You should have admin perms to use this command!")
+      return message.channel.send("You should have admin perms to use this command!").then(m => m.delete({ timeout: 5000 }))
     }
     
     const user = message.mentions.members.first()
     
     if(!user) {
-      return message.channel.send("Please Mention the person to who you want to warn - warn @mention <reaosn>")
+      return message.channel.send("Please Mention the person to who you want to warn - warn @mention <reaosn>").then(m => m.delete({ timeout: 5000 }))
     }
     
     if(message.mentions.users.first().bot) {
-      return message.channel.send("You can not warn bots")
+      return message.channel.send("You can not warn bots").then(m => m.delete({ timeout: 5000 }))
     }
     
     if(message.author.id === user.id) {
-      return message.channel.send("You can not warn yourself")
+      return message.channel.send("You can not warn yourself").then(m => m.delete({ timeout: 5000 }))
     }
     
     if(user.id === message.guild.owner.id) {
-      return message.channel.send("You jerk, how you can warn server owner -_-")
+      return message.channel.send("You jerk, how you can warn server owner -_-").then(m => m.delete({ timeout: 5000 }))
     }
     
     let reason = args.slice(1).join(" ")
@@ -37,7 +37,7 @@ module.exports = {
     let warnings = db.get(`warnings_${message.guild.id}_${user.id}`)
     
     if(warnings === 3) {
-      return message.channel.send(`${message.mentions.users.first().username} already reached his/her limit with 3 warnings`)
+      return message.channel.send(`${message.mentions.users.first().username} already reached his/her limit with 3 warnings`).then(m => m.delete({ timeout: 5000 }))
     }
     
     if(warnings === null) {

@@ -8,6 +8,8 @@ module.exports = {
   run: (client, message, args, storage) => {
     message.delete();
 
+    const user = message.mentions.members.first();
+    
     let kicked =
       message.mentions.users.first() || client.users.resolve(args[0]);
 
@@ -86,18 +88,12 @@ module.exports = {
       .then(message => message.delete({ timeout: 5000 }));
 
     let successfullyembed = new discord.MessageEmbed()
-
-      .setDescription(`${kicked.tag} has been successfully kicked.`)
-
-      .addFields(
-		{ name: 'Reason', value: 'Reason;', inline: true },
-		{ name: 'reasonText', value: `${reason}`, inline: true },
-	)
-
+      .setTitle(`${user.user.tag} has been successfully kicked`)
+      .setThumbnail(member.user.displayAvatarURL())
+      .addField("Reason", `${reason}`, true)
       .setColor("RAMDOM");
-
-    message.channel
+       message.channel
       .send(successfullyembed)
-      .then(m => m.delete({ timeout: 5000 }));
+      .then(m => m.delete({ timeout: 10000 }));
   }
 };

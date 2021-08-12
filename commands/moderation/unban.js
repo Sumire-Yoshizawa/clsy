@@ -1,4 +1,5 @@
-const Discord = require("discord.js");
+const  Discord = require("discord.js");
+const { MessageEmbed } = require('discord.js');
 
 module.exports = {
   name: "unban",
@@ -9,7 +10,7 @@ module.exports = {
 
   usage: "unban <@user>",
 
-  cooldown: 50000,
+  cooldown: 10000,
 
   botPermission: ["BAN_MEMBERS"],
 
@@ -17,19 +18,21 @@ module.exports = {
   run: async (client, message, args) => {
     message.delete();
 
+    // const user = message.mentions.members.first();
+
     if (!message.member.hasPermission("BAN_MEMBERS"))
       return message.channel
 
         .send("you dont have permession to use this command!")
 
-        .then(m => m.delete({ timeout: 3000 }));
+        .then(m => m.delete({ timeout: 5000 }));
 
     if (!args[0])
       return message.channel
 
         .send("please enter a users id to unban!")
 
-        .then(m => m.delete({ timeout: 3000 }));
+        .then(m => m.delete({ timeout: 5000 }));
 
     let member;
 
@@ -42,16 +45,12 @@ module.exports = {
 
         .send("Not a valid user!")
 
-        .then(m => m.delete({ timeout: 3000 }));
+        .then(m => m.delete({ timeout: 5000 }));
     }
 
-    const reason = args[1] ? args.slice(1).join(" ") : "no reason";
+    const reason = args[1] ? args.slice(1).join(" ") : "Unspecified";
 
-    const embed = new MessageEmbed().setFooter(
-      `${message.author.tag} | ${message.author.id}`,
-
-      message.author.displayAvatarURL({ dynamic: true })
-    );
+    const embed = new MessageEmbed()
 
     message.guild
 
@@ -59,12 +58,12 @@ module.exports = {
 
       .then(bans => {
         const user = bans.find(ban => ban.user.id === member.id);
-
+        
         if (user) {
           embed
 
             .setTitle(`Successfully Unbanned ${user.user.tag}`)
-
+            
             .setColor("#00ff00")
 
             .addField("User ID", user.user.id, true)
@@ -72,31 +71,41 @@ module.exports = {
             .addField("User Tag", user.user.tag, true)
 
             .addField(
-              "Banned Reason",
+              "Banned Reason:",
 
-              user.reason != null ? user.reason : "no reason"
+              user.reason != null ? user.reason : reason
+            )
+            .setFooter(
+              `${message.author.tag} | ${message.author.id}`,
+              
+              message.author.displayAvatarURL({ dynamic: true })
+              
             );
 
           message.guild.members
 
             .unban(user.user.id, reason)
-
-            .then(() => message.channel.send(embed));
+            .then(() => message.channel.send(embed)).then(m => m.delete({ timeout: 5000 }));
         } else {
           embed
 
             .setTitle(`User ${member.tag} isn't banned!`)
 
             .setColor("#ff0000");
-
-          message.channel.send(embed);
+            
+         
+          message.channel.send(embed).then(m => m.delete({ timeout: 5000 }))
+            
+            
         }
+        
       })
 
       .catch(e => {
         console.log(e);
 
-        message.channel.send("An error has occurred!");
+        message.channel.send("error : "  + (e)).then(m => m.delete({ timeout: 5000 }));
       });
+      
   }
 };

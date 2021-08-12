@@ -53,7 +53,7 @@ module.exports = {
       `You muted **${
         message.mentions.users.first().username
       }** For \`${reason}\``
-    ).then(m => m.delete({ timeout: 5000 }));
+    ).then(m => m.delete({ timeout: 10000 }));
 
     user.send(`You are muted in **${message.guild.name}** For \`${reason}\``);
 

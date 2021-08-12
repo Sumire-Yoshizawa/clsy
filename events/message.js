@@ -1,5 +1,5 @@
+const Discord = require('discord.js')
 const db = require("quick.db")
-const { addexp } = require("../handlers/xp.js");
 const { ownerID, default_prefix } = require("../config.json");
 const { badwords } = require("../data.json") 
 let cooldown = {}
@@ -8,9 +8,10 @@ module.exports.run = async (client, message) => {
   if (message.author.bot) return;
   if (!message.guild) return;
 
-  addexp(message);
+  //require('../handlers/afk.js')(client, message)
 
-  if (!message.member.hasPermission("ADMINISTRATOR")) {
+
+ if (!message.member.hasPermission("ADMINISTRATOR")) {
 
 
 

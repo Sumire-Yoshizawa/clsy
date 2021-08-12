@@ -12,11 +12,15 @@ module.exports = {
         .send("The reason you're too long")
         .then(message => message.delete({ timeout: 10000 }));
         const content = args.join("")
-        await db.set(`afk-${message.author.id}+${message.guild.id}`, content)
+        //const reason = await db.set(`afk-${message.author.id}+${message.guild.id}`)
+        await db.set(`afk-${message.author.id}+${message.guild.id}+${content}`,content)
         const embed = new MessageEmbed()
-        .setDescription(`You have been set to afk \n**Reason :**${content ? content : "AFK"}`)
+        //.setDescription(`You have been set to afk \n**Reason :**${content ? content : "AFK"}`)
+        .addField("You have been set to afk ", `**Reason : **${content ? content : "AFK"}`, true)
         .setColor("GREEN")
-        .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic : true }))
+        .setFooter(`${message.author.tag}`, message.author.displayAvatarURL())
+        .setTimestamp();
+        //.setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic : true }))
         message.channel.send(embed)                
     }
 }
