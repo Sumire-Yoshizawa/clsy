@@ -21,13 +21,7 @@ client.on("message", message => {
       message.content.includes("@everyone")
     )
       return false;
-    if (message.mentions.has(client.user.id)) {
-      message.channel.send(
-        "My prefix is :  " +
-       [`**${prefix}**`]
-      );
-    }
-     else return;
+    
   });
 });
 //prefix
