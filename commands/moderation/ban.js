@@ -13,7 +13,7 @@ module.exports = {
       return message.channel
         .send("I don't have the right permissions.")
         .then(message => {
-          message.delete({ timeout: 3000 });
+          message.delete({ timeout: 5000 });
         })
         .catch(O_o => {});
 
@@ -25,7 +25,7 @@ module.exports = {
       return message.channel
         .send("Please specify a user")
         .then(message => {
-          message.delete({ timeout: 3000 });
+          message.delete({ timeout: 5000 });
         })
         .catch(O_o => {});
 
@@ -33,7 +33,7 @@ module.exports = {
       return message.channel
         .send("Can't seem to find this user. Sorry 'bout that :/")
         .then(message => {
-          message.delete({ timeout: 3000 });
+          message.delete({ timeout: 5000 });
         })
         .catch(O_o => {});
 
@@ -43,7 +43,7 @@ module.exports = {
           "This user can't be banned. It is either because they are a mod/admin, or their highest role is higher than mine"
         )
         .then(message => {
-          message.delete({ timeout: 3000 });
+          message.delete({ timeout: 5000 });
         })
         .catch(O_o => {});
 
@@ -51,7 +51,7 @@ module.exports = {
       return message.channel
         .send("Bruh, you can't ban yourself!")
         .then(message => {
-          message.delete({ timeout: 3000 });
+          message.delete({ timeout: 5000 });
         })
         .catch(O_o => {});
 
@@ -63,7 +63,7 @@ module.exports = {
       .ban({ reason: banReason })
 
       .catch(err => {
-        if (err) return message.channel.send("Something went wrong");
+        if (err) return message.channel.send("Something went wrong +" err).then(m => m.delete({ timeout: 5000 }));
       });
 
     const banembed = new Discord.MessageEmbed()
@@ -85,6 +85,6 @@ module.exports = {
 
       .setTimestamp();
 
-    message.channel.send(banembed);
+    message.channel.send(banembed).then(m => m.delete({ timeout: 10000 }));
   }
 };
