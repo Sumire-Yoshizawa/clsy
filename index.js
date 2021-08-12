@@ -27,6 +27,7 @@ client.on("message", message => {
        [`**${prefix}**`]
       );
     }
+     else return;
   });
 });
 //prefix
