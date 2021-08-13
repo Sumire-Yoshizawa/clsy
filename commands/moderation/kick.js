@@ -8,6 +8,8 @@ module.exports = {
   run: (client, message, args, storage) => {
     message.delete();
 
+    const user = message.mentions.members.first();
+    
     let kicked =
       message.mentions.users.first() || client.users.resolve(args[0]);
 
@@ -18,7 +20,7 @@ module.exports = {
     if (!message.member.hasPermission("KICK_MEMBERS"))
       return message.channel
         .send("You do not have permissions to use this command")
-        .then(message => message.delete({ timeout: 3000 }));
+        .then(message => message.delete({ timeout: 5000 }));
 
     // MESSAGES
 
@@ -44,35 +46,22 @@ module.exports = {
 
       message.channel
         .send(sanctionyourselfembed)
-        .then(message => message.delete({ timeout: 3000 }));
+        .then(message => message.delete({ timeout: 5000 }));
 
       return;
     }
 
-    if (!reason) {
-      let noreasonembed = new discord.MessageEmbed()
-
-        .setDescription(`Enter a reason`)
-
-        .setColor("RAMDOM");
-
-      message.channel
-        .send(noreasonembed)
-        .then(message => message.delete({ timeout: 3000 }));
-
-      return;
-    }
-
+    
     if (!message.member.permissions.has("KICK_MEMBERS")) {
       let nopermsembed = new discord.MessageEmbed()
 
         .setDescription(
-          "You do not have permission `KICK MEMBERS` contact an administrator"
+          "You do not have permission `KICK MEMBERS`"
         )
 
         .setColor("RANDOM");
 
-      message.channel.send(nopermsembed).then(message => message.delete({ timeout: 3000 }));
+      message.channel.send(nopermsembed).then(message => message.delete({ timeout: 5000 }));
 
       return;
     }
@@ -81,14 +70,14 @@ module.exports = {
       let botnopermsembed = new discord.MessageEmbed()
 
         .setDescription(
-          "I do not have `KICK MEMBERS` permission, please contact an administrator"
+          "I do not have `KICK MEMBERS` permission"
         )
 
         .setColor("RAMDOM");
 
       message.channel
         .send(botnopermsembed)
-        .then(m => m.delete({ timeout: 3000 }));
+        .then(m => m.delete({ timeout: 5000 }));
 
       return;
     }
@@ -96,16 +85,14 @@ module.exports = {
     message.guild
       .member(kicked)
       .kick(reason)
-      .then(message => message.delete({ timeout: 3000 }));
+      .then(m=> m.delete({ timeout: 5000 }));
 
     let successfullyembed = new discord.MessageEmbed()
-
-      .setDescription(`${kicked.tag} has been successfully kicked.`)
-
+      .setTitle(`${user.user.tag} has been successfully kicked`)
+      .addField("Reason", `${reason}`, true)
       .setColor("RAMDOM");
-
-    message.channel
+       message.channel
       .send(successfullyembed)
-      .then(m => m.delete({ timeout: 3000 }));
+      .then(m => m.delete({ timeout: 10000 }));
   }
 };

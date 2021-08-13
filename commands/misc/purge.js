@@ -1,5 +1,5 @@
 const Discord = require("discord.js");
-
+const { messages } = require("discord.js");
 const client = new Discord.Client();
 
 module.exports = {
@@ -61,9 +61,13 @@ module.exports = {
       deleteAmount = parseInt(args[0]);
     }
     await message.channel.bulkDelete(
-      (await message.channel.messages.fetch({ limit: args[1] })).filter(
+      (await message.channel.messages.fetch({ limit: args[1] }) ).filter(
         m => !m.pinned
       )
-    );
-  }
+      ).catch(err)
+      
+     
+      
+      
+    }
 };

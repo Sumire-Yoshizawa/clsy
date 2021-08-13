@@ -14,7 +14,7 @@ module.exports = {
     if(warnings === null) warnings = 0;
     
     
-    message.channel.send(`${user} have **${warnings}** warning(s)`)
+    message.channel.send(`${user} have **${warnings}** warning(s)`).then(m => m.delete({ timeout: 5000 }))
   
   
   }

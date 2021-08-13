@@ -22,7 +22,7 @@ module.exports = {
 
     const currentCooldown = message.channel.rateLimitPerUser;
 
-    const reason = args[1] ? args.slice(1).join(" ") : "no reason";
+    const reason = args[1] ? args.slice(1).join(" ") : "Unspecified";
 
     const embed = new MessageEmbed().setFooter(
       `${message.author.tag} | ${message.author.id}`,
