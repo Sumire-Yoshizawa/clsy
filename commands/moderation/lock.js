@@ -4,7 +4,7 @@ module.exports = {
     name: "lock",
     description: "lock all channels for antiraid",
     category: "moderation",
-    usage: "lock all",
+    usage: "lock all || lock off",
   
     run: async (client, message, args) => {
         const channels = message.guild.channels.cache.filter(ch => ch.type !== 'category');
