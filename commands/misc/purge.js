@@ -61,11 +61,10 @@ module.exports = {
       deleteAmount = parseInt(args[0]);
     }
     await message.channel.bulkDelete(
-      (await message.channel.messages.fetch({ limit: args[1] })).filter(
+      (await message.channel.messages.fetch({ limit: args[1] }) ).filter(
         m => !m.pinned
       )
-      )
-      
+    ) 
      
       
       
