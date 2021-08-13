@@ -85,10 +85,18 @@ module.exports = {
     message.guild
       .member(kicked)
       .kick(reason)
+
       .then(m=> m.delete({ timeout: 5000 }));
 
     let successfullyembed = new discord.MessageEmbed()
       .setTitle(`${user.user.tag} has been successfully kicked`)
+
+      .then(message => message.delete({ timeout: 5000 }));
+
+    let successfullyembed = new discord.MessageEmbed()
+      .setTitle(`${user.user.tag} has been successfully kicked`)
+      .setThumbnail(member.user.displayAvatarURL())
+
       .addField("Reason", `${reason}`, true)
       .setColor("RAMDOM");
        message.channel
