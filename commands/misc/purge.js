@@ -64,7 +64,8 @@ module.exports = {
       (await message.channel.messages.fetch({ limit: args[1] }) ).filter(
         m => !m.pinned
       )
-    ) 
+      ).catch(err)
+      
      
       
       
